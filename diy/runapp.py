@@ -48,5 +48,6 @@ if __name__ == '__main__':
     app = tornado.web.Application([('/wdqk',MainHandler),('/detail/(\S+)$',DetailHandler)],
             template_path=os.path.join(os.path.dirname(__file__), "./template"),static_path=os.path.join(os.path.dirname(__file__), "./static"),debug=True,autoescape=None
             )
-    app.listen(8888,'localhost')
+    address = os.environ['OPENSHIFT_INTERNAL_IP']
+    app.listen(8888,address=address)
     tornado.ioloop.IOLoop.instance().start()
