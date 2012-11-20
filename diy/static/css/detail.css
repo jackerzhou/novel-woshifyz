@@ -1,0 +1,9 @@
+body{background: #EFEBE0 url(/static/back.jpg) repeat;}
+#header{width:60%;margin:0 auto;height:120px;text-align:center;font-size:26px;line-height:100px;vertical-align:middle;}
+#content{width:60%;margin:0 auto;line-height:22px;}
+#footer{width:60%;margin:0 auto;height:80px;text-align:center;line-height:80px;vertical-align:middle;font-size:12px;}
+#menu{position: fixed;left:0px;top:250px;width:18%;}
+#menu li{display: block;font-size: 17px;padding-top: 10px;padding-bottom: 10px;padding-left:10px;}
+#menu .cur{background-color: pink;border-radius:4px;}
+a:link{color:black;}
+a:visited{color: black;}

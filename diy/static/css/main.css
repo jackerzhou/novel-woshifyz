@@ -1,0 +1,7 @@
+body{background: #EFEBE0 url(/static/back.jpg) repeat;}
+#header{height:100px;}
+.clear{clear:both;}
+#content{width:960px;margin:0 auto; background-color: rgba(50,10,50,0.1);font-size: 14px;border-radius: 4px; }
+#content ul li {float: left; width:200px;margin:10px 20px 10px 20px;}
+:link{color:black;}
+#footer{width:960px;margin:0 auto;height:80px;text-align:center;line-height:80px;vertical-align:middle;font-size:12px;}

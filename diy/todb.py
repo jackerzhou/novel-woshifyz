@@ -1,0 +1,18 @@
+import tornado.database
+from bs4 import BeautifulSoup
+import urllib
+import re
+main_content = urllib.urlopen("http://www.saesky.net/wudongqiankun/").read()
+con_soup = BeautifulSoup(main_content)
+mulu = con_soup.find('div',{'class':'box'})
+para = mulu.findAll('li')
+res = []
+conn = tornado.database.Connection('localhost','wdqk',user='root',password='')
+for p in para:
+    try:
+        tmp = {}
+        tmp['href'] = p.a['href']
+        tmp['name'] = p.string
+        conn.execute("insert into wdqk (num,name) values(%s,%s)",tmp['href'].encode('utf-8'),tmp['name'].encode('utf-8'))
+    except:
+        pass

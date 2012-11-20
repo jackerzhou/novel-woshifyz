@@ -1,0 +1,6 @@
+* {margin:0;padding:0;}
+html{color:#000;background:#FFF;}
+ol,ul{list-style:none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after {content:'';content:none;}
+:link, :visited {text-decoration:none;}
