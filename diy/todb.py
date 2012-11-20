@@ -7,7 +7,7 @@ con_soup = BeautifulSoup(main_content)
 mulu = con_soup.find('div',{'class':'box'})
 para = mulu.findAll('li')
 res = []
-conn = tornado.database.Connection('localhost','wdqk',user='root',password='')
+conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
 for p in para:
     try:
         tmp = {}

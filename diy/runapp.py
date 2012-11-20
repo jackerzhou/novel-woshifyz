@@ -8,7 +8,7 @@ import re
 from utils import filter_link
 
 class MainHandler(tornado.web.RequestHandler):
-    w_conn = tornado.database.Connection('localhost','wdqk',user='root',password='')
+    w_conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
     def get(self):
         all_para = self.w_conn.query("select num,name from wdqk")
         for para in all_para:
@@ -22,10 +22,10 @@ class MainHandler(tornado.web.RequestHandler):
         self.w_conn.close()
 
 class DetailHandler(tornado.web.RequestHandler):
-    w_conn = tornado.database.Connection('localhost','wdqk',user='root',password='')
+    w_conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
     def get(self,id):
         filename = 'wdqk_%s.txt' % (id,)
-        filename = os.path.join(os.path.dirname(__file__),"../wudongqiankun/%s" % (filename,))
+        filename = os.path.join(os.path.dirname(__file__),"./wudongqiankun/%s" % (filename,))
         try:
             fp = open(filename,'r')
             content = fp.read()
