@@ -1,4 +1,5 @@
 ## pip project requirements
 
 tornado==2.2
-pycurl==7.19.0
+beautifulsoup4
+MySQL-python
