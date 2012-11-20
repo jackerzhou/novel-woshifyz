@@ -49,5 +49,5 @@ if __name__ == '__main__':
             template_path=os.path.join(os.path.dirname(__file__), "./template"),static_path=os.path.join(os.path.dirname(__file__), "./static"),debug=True,autoescape=None
             )
     address = os.environ['OPENSHIFT_INTERNAL_IP']
-    app.listen(8888,address=address)
+    app.listen(8080,address=address)
     tornado.ioloop.IOLoop.instance().start()
