@@ -51,3 +51,12 @@ Additional information
 ======================
 
 Link to additional information will be here, when we have it :)
+o
+
+
+ Properties
+  ==========
+    Username       = admin
+    Connection URL = mysql://127.6.123.1:3306/
+    Password       = b4E3e3T8KRj8
+    Database Name  = novel
