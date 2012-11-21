@@ -1,4 +1,0 @@
-#!/bin/bash
-
-chmod a+x ${OPENSHIFT_REPO_DIR}/diy/update.py
-${OPENSHIFT_REPO_DIR}/../virtenv/bin/python ${OPENSHIFT_REPO_DIR}/diy/update.py
