@@ -45,8 +45,13 @@ class DetailHandler(tornado.web.RequestHandler):
     def __del__(self):
         self.w_conn.close()
 
+
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.redirect('/wdqk')
+
 if __name__ == '__main__':
-    app = tornado.web.Application([('/wdqk',MainHandler),('/detail/(\S+)$',DetailHandler)],
+    app = tornado.web.Application([('/',IndexHandler),('/wdqk',MainHandler),('/detail/(\S+)$',DetailHandler)],
             template_path=os.path.join(os.path.dirname(__file__), "./template"),static_path=os.path.join(os.path.dirname(__file__), "./static"),debug=True,autoescape=None
             )
     address = os.environ['OPENSHIFT_INTERNAL_IP']
