@@ -6,7 +6,7 @@ import tornado.httpclient
 import tornado.ioloop
 import tornado.database
 import re
-from utils import filter_link
+from utils import filter_link,gen_wdqk_path
 
 class MainHandler(tornado.web.RequestHandler):
     w_conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
@@ -26,7 +26,7 @@ class DetailHandler(tornado.web.RequestHandler):
     w_conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
     def get(self,id):
         filename = 'wdqk_%s.txt' % (id,)
-        filename = os.path.join(os.path.dirname(__file__),"./wudongqiankun/%s" % (filename,))
+        filename = os.path.join(gen_wdqk_path(),filename)
         try:
             fp = open(filename,'r')
             content = fp.read()

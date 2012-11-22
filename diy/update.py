@@ -61,7 +61,7 @@ def main():
             if p.a['href'] == last_num:
                 at = True
 
-    path = os.path.join(os.path.dirname(__file__),'wudongqiankun')
+    path = gen_wdqk_path()
     if not os.path.exists(path):
         os.mkdir(path)
     os.chdir(path)
