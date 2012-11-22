@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import tornado.database
 from bs4 import BeautifulSoup
 import urllib

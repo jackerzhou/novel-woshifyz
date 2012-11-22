@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os,os.path
 import tornado.web
 import tornado.httpserver
