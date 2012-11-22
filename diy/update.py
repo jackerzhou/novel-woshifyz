@@ -7,6 +7,7 @@ import re
 from Queue import Queue
 import re
 import os,os.path
+from utils import gen_wdqk_path
 
 def get_content(qu):
     while True:
