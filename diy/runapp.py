@@ -32,13 +32,22 @@ class DetailHandler(tornado.web.RequestHandler):
             content = fp.read()
             num = 'http://www.saesky.net/wudongqiankun/%s.html' % (id,)
             cur = self.w_conn.get("select id,name from wdqk where num='%s' " % (num,))
-            together = self.w_conn.query("select id,num,name from wdqk where id>=%d and id<=%d" % (int(cur['id'])-4,int(cur['id'])+5,))
-            for para in together:
+            together = self.w_conn.query("select id,num,name from wdqk where id>=%d and id<=%d" % (int(cur['id'])-3,int(cur['id'])+6,))
+            cur_num = 0
+            for i,para in enumerate(together):
                 url = para['num']
+                if para['id'] == cur['id']:
+                    cur_num = i
                 num = re.match(r'http://www.saesky.net/wudongqiankun/(\S+?)\.html',url).group(1)
                 file_name = 'wdqk_%s.txt' % (num,)
                 para['num'] = '/detail/%s' % (num,)
-            self.render('detail.html',dic={'content':filter_link(content),'cur':cur,'together':together})
+            pre_para = '0'
+            next_para = '0'
+            if cur_num-1>=0:
+                pre_para = together[cur_num-1]['num']
+            if cur_num+1<len(together):
+                next_para = together[cur_num+1]['num']
+            self.render('detail.html',dic={'content':filter_link(content),'cur':cur,'together':together,'pre':pre_para,'next':next_para})
         except Exception,e:
             pass
 

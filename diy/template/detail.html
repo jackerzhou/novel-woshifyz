@@ -17,6 +17,10 @@
                 {% end %}
             </ul>
         </div>
+        <div class="hidden">
+            <div id="pre" value="{{ dic['pre'] }}"></div>
+            <div id="next" value="{{ dic['next'] }}"></div>
+        </div>
         <div id="header">
             <div id="title">{{ dic['cur']['name'] }}</div>
         </div>
@@ -26,5 +30,28 @@
         <div id="footer">
             copyright@fyz.com
         </div>
+        <script>
+            $(document).ready(function(){
+
+                $(document).keydown(function(e){
+                    if(e.keyCode == 37){
+                        var value = $("#pre").val();
+                        if (value.length>2){
+                            window.location.href=value;
+                        }
+                    }
+                    else if(e.keyCode == 39){
+                        var value = $("#next").val();
+                        if (value.length>2){
+                            window.location.href=value;
+                        }
+                    }
+                    else{
+                        ;
+                    }
+                });
+            });
+
+        </script>
     </body>
 </html>
