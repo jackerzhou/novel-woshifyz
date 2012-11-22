@@ -7,4 +7,4 @@ def filter_link(content):
     return content
 
 def gen_wdqk_path():
-    return os.path.join(os.environ['OPENSHIFT_INTERNAL_IP'],'..','wudongqiankun')
+    return os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'..','wudongqiankun')
