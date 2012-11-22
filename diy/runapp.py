@@ -32,7 +32,9 @@ class DetailHandler(tornado.web.RequestHandler):
             content = fp.read()
             num = 'http://www.saesky.net/wudongqiankun/%s.html' % (id,)
             cur = self.w_conn.get("select id,name from wdqk where num='%s' " % (num,))
-            together = self.w_conn.query("select id,num,name from wdqk where id>=%d and id<=%d" % (int(cur['id'])-3,int(cur['id'])+6,))
+            together_next = self.w_conn.query("select id,num,name from wdqk where id>=%d order by id limit 6" % (int(cur['id']),))
+            together = self.w_conn.query("select id,num,name from wdqk where id<%d order by id desc limit 3" % (int(cur['id']),))
+            together.extend(together_next)
             cur_num = 0
             for i,para in enumerate(together):
                 url = para['num']
