@@ -34,6 +34,7 @@ class DetailHandler(tornado.web.RequestHandler):
             cur = self.w_conn.get("select id,name from wdqk where num='%s' " % (num,))
             together_next = self.w_conn.query("select id,num,name from wdqk where id>=%d order by id limit 6" % (int(cur['id']),))
             together = self.w_conn.query("select id,num,name from wdqk where id<%d order by id desc limit 3" % (int(cur['id']),))
+            together.reverse()
             together.extend(together_next)
             cur_num = 0
             for i,para in enumerate(together):
