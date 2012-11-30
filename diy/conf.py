@@ -1,4 +1,5 @@
-books = [
+books = { 
+            'wdqk':
             {
                 'id':'wdqk',
                 'dir_name':'wudongqiankun',
@@ -8,7 +9,7 @@ books = [
                 'table':'wdqk'
             }
 
-        ]
+        }
 
 dbconf = {'host':'127.6.123.1','db':'novel','user':'admin','passwd':'b4E3e3T8KRj8'}
 

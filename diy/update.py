@@ -37,7 +37,8 @@ def get_content(book,conn,qu):
             
 def main():
     conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
-    for book in books:
+    for key in books:
+        book = books[key]
         menu_parser = getattr(parser,'%s_menu_parser' % (book['id'],))
         para = menu_parser(book['main_page'])
         res = []

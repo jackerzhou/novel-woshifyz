@@ -6,12 +6,14 @@ import tornado.httpclient
 import tornado.ioloop
 import tornado.database
 import re
-from utils import filter_link,gen_wdqk_path
+from utils import filter_link,gen_content_path
+from conf import books,dbconf
 
 class MainHandler(tornado.web.RequestHandler):
-    w_conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
-    def get(self):
-        all_para = self.w_conn.query("select num,name from wdqk")
+    conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
+    def get(self,id):
+        book = books[str(id).strip()]
+        all_para = self.w_conn.query("select num,name from %s" % (book['table'],))
         for para in all_para:
             url = para['num']
             num = re.match(r'http://www.saesky.net/wudongqiankun/(\S+?)\.html',url).group(1)
