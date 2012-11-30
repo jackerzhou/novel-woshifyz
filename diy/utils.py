@@ -8,3 +8,6 @@ def filter_link(content):
 
 def gen_wdqk_path():
     return os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'..','wudongqiankun')
+
+def gen_content_path(name):
+    return os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'..',name)
