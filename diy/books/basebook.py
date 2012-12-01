@@ -74,7 +74,7 @@ class BaseBook(object):
                 fp = file(file_name,'w')
                 fp.write(con_str)
                 fp.close()
-                self.conn.execute("insert into %s (num,title,source_url) values('%s','%s','%s')" % (self._table_name,num,tmp['title'].encode('utf-8'),tmp['source_url'].encode('utf-8'),))
+                self.conn.execute("insert into %s (num,title,source_url) values('%s','%s','%s')" % (self._table_name,num.encode('utf-8'),tmp['title'].encode('utf-8'),tmp['source_url'].encode('utf-8'),))
             except Exception,e:
                 print url
 
