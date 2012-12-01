@@ -61,7 +61,7 @@ class DetailHandler(tornado.web.RequestHandler):
         try:
             fp = open(filename,'r')
             content = fp.read()
-            cur = self.conn.get("select id,name from %s where num='%s' " % (name,id,))
+            cur = self.conn.get("select id,num,title from %s where num='%s' " % (name,id,))
             together_next = self.conn.query("select id,num,title from %s where id>=%d order by id limit 6" % (name,int(cur['id']),))
             together = self.conn.query("select id,num,title from %s where id<%d order by id desc limit 3" % (name,int(cur['id']),))
             together.reverse()
