@@ -10,9 +10,9 @@
             <ul>
                 {% for p in dic['together'] %}
                     {% if p['id'] == dic['cur']['id'] %}
-                    <li class="cur"><a href="{{ p['num'] }}">{{ p['name'] }}</a></li>    
+                    <li class="cur"><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>    
                     {% else %}
-                    <li><a href="{{ p['num'] }}">{{ p['name'] }}</a></li>    
+                    <li><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>    
                     {% end %}
                 {% end %}
             </ul>
@@ -25,7 +25,7 @@
             <div id="next" value="{{ dic['next'] }}"></div>
         </div>
         <div id="header">
-            <div id="title">{{ dic['cur']['name'] }}</div>
+            <div id="title">{{ dic['cur']['title'] }}</div>
         </div>
         <div id="content"> 
             {{ dic['content'] }}

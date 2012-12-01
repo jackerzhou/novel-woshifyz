@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import os,os.path
 import tornado.web
 import tornado.httpserver
@@ -6,46 +7,70 @@ import tornado.httpclient
 import tornado.ioloop
 import tornado.database
 import re
-from utils import filter_link,gen_content_path
-from conf import books,dbconf
+from utils import filter_link,gen_content_path,book_relative_import
+from conf import books,gen_dbconf
 
-class MainHandler(tornado.web.RequestHandler):
-    conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
-    def get(self,id):
-        book = books[str(id).strip()]
-        all_para = self.w_conn.query("select num,name from %s" % (book['table'],))
-        for para in all_para:
-            url = para['num']
-            num = re.match(r'http://www.saesky.net/wudongqiankun/(\S+?)\.html',url).group(1)
-            file_name = 'wdqk_%s.txt' % (num,)
-            para['num'] = '/detail/%s' % (num,)
-        self.render('main.html',dic=all_para)
+class Application(tornado.web.Application):
+    def __init__(self,mode):
+        handlers = [
+            ('/',IndexHandler),
+            ('/(\w+)$',MainHandler),
+            ('/([^/]+?)/detail/(\S+)$',DetailHandler)
+        ] 
+        settings = dict(
+            template_path=os.path.join(os.path.dirname(__file__), "./template"),
+            static_path=os.path.join(os.path.dirname(__file__), "./static"),
+            debug=True,
+            autoescape=None
+        )
+        super(Application,self).__init__(handlers,**settings)
+        self.mode = mode
+        
+        dbconf = gen_dbconf(self.mode)
+        self.conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
+        self.books = {}
+        for key in books:
+            book_module = book_relative_import(books[key])
+            book = book_module()
+            self.books[key] = book
 
     def __del__(self):
-        self.w_conn.close()
+        self.conn.close()
+
+class MainHandler(tornado.web.RequestHandler):
+    @property
+    def conn(self):
+        return self.application.conn
+
+    def get(self,id):
+        book = self.application.books[str(id).strip()]
+        all_para = self.conn.query("select num,title from %s" % (book.table_name,))
+        for para in all_para:
+            para['num'] = book.translate_link(para['num'])
+        self.render('main.html',dic=all_para)
 
 class DetailHandler(tornado.web.RequestHandler):
-    w_conn = tornado.database.Connection('127.6.123.1','novel',user='admin',password='b4E3e3T8KRj8')
-    def get(self,id):
-        filename = 'wdqk_%s.txt' % (id,)
-        filename = os.path.join(gen_wdqk_path(),filename)
+    @property
+    def conn(self):
+        return self.application.conn
+
+    def get(self,name,id):
+        book = self.application.books[name]
+        filename = '%s_%s.txt' % (name,id,)
+        filename = os.path.join(gen_content_path(self.application.mode,book.dir_name),filename)
         try:
             fp = open(filename,'r')
             content = fp.read()
-            num = 'http://www.saesky.net/wudongqiankun/%s.html' % (id,)
-            cur = self.w_conn.get("select id,name from wdqk where num='%s' " % (num,))
-            together_next = self.w_conn.query("select id,num,name from wdqk where id>=%d order by id limit 6" % (int(cur['id']),))
-            together = self.w_conn.query("select id,num,name from wdqk where id<%d order by id desc limit 3" % (int(cur['id']),))
+            cur = self.conn.get("select id,name from %s where num='%s' " % (name,id,))
+            together_next = self.conn.query("select id,num,title from %s where id>=%d order by id limit 6" % (name,int(cur['id']),))
+            together = self.conn.query("select id,num,title from %s where id<%d order by id desc limit 3" % (name,int(cur['id']),))
             together.reverse()
             together.extend(together_next)
             cur_num = 0
             for i,para in enumerate(together):
-                url = para['num']
                 if para['id'] == cur['id']:
                     cur_num = i
-                num = re.match(r'http://www.saesky.net/wudongqiankun/(\S+?)\.html',url).group(1)
-                file_name = 'wdqk_%s.txt' % (num,)
-                para['num'] = '/detail/%s' % (num,)
+                para['num'] = book.translate_link(para['num'])
             pre_para = '0'
             next_para = '0'
             if cur_num-1>=0:
@@ -56,18 +81,19 @@ class DetailHandler(tornado.web.RequestHandler):
         except Exception,e:
             pass
 
-    def __del__(self):
-        self.w_conn.close()
-
-
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.redirect('/wdqk')
 
 if __name__ == '__main__':
-    app = tornado.web.Application([('/',IndexHandler),('/wdqk',MainHandler),('/detail/(\S+)$',DetailHandler)],
-            template_path=os.path.join(os.path.dirname(__file__), "./template"),static_path=os.path.join(os.path.dirname(__file__), "./static"),debug=True,autoescape=None
-            )
-    address = os.environ['OPENSHIFT_INTERNAL_IP']
+    try:
+        mode = sys.argv[1]
+    except:
+        mode = 'pro'
+    app = Application(mode)
+    if mode == 'dev':
+        address = 'localhost'
+    else:
+        address = os.environ['OPENSHIFT_INTERNAL_IP']
     app.listen(8080,address=address)
     tornado.ioloop.IOLoop.instance().start()
