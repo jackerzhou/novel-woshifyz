@@ -60,7 +60,6 @@ class BaseBook(object):
             try:
                 num = self.gen_url_num(url)
                 file_name = '%s_%s.txt' % (self._name,num,)
-                self.conn.execute("insert into %s (num,title,source_url) values('%s','%s','%s')" % (self._table_name,num.encode('utf-8'),tmp['title'].encode('utf-8'),tmp['source_url'].encode('utf-8'),))
                 if os.path.exists(file_name):
                     continue
                 while True:
@@ -75,7 +74,7 @@ class BaseBook(object):
                 fp = file(file_name,'w')
                 fp.write(con_str)
                 fp.close()
-                #self.conn.execute("insert into %s (num,title,source_url) values('%s','%s','%s')" % (self._table_name,num,tmp['title'].encode('utf-8'),tmp['source_url'].encode('utf-8'),))
+                self.conn.execute("insert into %s (num,title,source_url) values('%s','%s','%s')" % (self._table_name,num,tmp['title'].encode('utf-8'),tmp['source_url'].encode('utf-8'),))
             except Exception,e:
                 print url
 
