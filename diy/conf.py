@@ -1,4 +1,9 @@
-books = {'wdqk':['books.wdqkbook','WdqkBook']}
+# -*- coding:utf-8 -*-
+books = {
+        #'wdqk':['books.wdqkbook','WdqkBook'],
+        #'wuliandianfeng':['books.wuliandianfengbook','WuliandianfengBook','wuliandianfeng']
+        'doupocangqiong':['books.doupocangqiongbook','DoupocangqiongBook','doupocangqiong']
+        }
 
 def gen_dbconf(mode):
     if mode == 'dev':

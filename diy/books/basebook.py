@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from Queue import Queue
 import os,os.path
 from bs4 import BeautifulSoup
@@ -8,7 +9,7 @@ class BaseBook(object):
     def menu_parser(self):
         raise NotImplementedError    
 
-    def para_parser(self):
+    def para_parser(self,url):
         raise NotImplementedError
 
     def gen_one_para_dic(self,para):
@@ -19,6 +20,18 @@ class BaseBook(object):
 
     def gen_url_num(self,url):
         raise NotImplementedError
+
+    def make_para_url(self,url):
+        return url
+
+    def ensure_table_exist(self):
+        query = "create table if not exists %s( " \
+                "id int primary key auto_increment, " \
+                "num varchar(32) not null default '', " \
+                "title varchar(64) not null default '', " \
+                "source_url varchar(256) not null default '', " \
+                "key num_index(num))engine=innodb,default charset=utf8; " % (self._table_name,)
+        self.conn.execute(query)
 
     def gen_last(self):
         #every book have only one structure
@@ -31,23 +44,23 @@ class BaseBook(object):
         self.qu = Queue()
         for p in self.para:
             tmp = self.gen_one_para_dic(p)
-            if self.at:
-                try:
-                    self.qu.put(tmp)
-                except:
-                    pass
-            else:
-                if tmp['source_url'] == self.last_url:
-                    self.at = True
+            if tmp:
+                if self.at:
+                    try:
+                        self.qu.put(tmp)
+                    except:
+                        pass
+                else:
+                    if tmp['source_url'] == self.last_url:
+                        self.at = True
 
         
     def process(self,conn):
         self.conn = conn
+        self.ensure_table_exist()
         self.at,self.last_url = self.gen_last()
         
-        main_content = urllib.urlopen(self._main_page).read()
-        con_soup = BeautifulSoup(main_content)
-        self.para = self.menu_parser(con_soup)
+        self.para = self.menu_parser()
         self.gen_insert_queue()
         
         while True:
@@ -64,9 +77,7 @@ class BaseBook(object):
                     continue
                 while True:
                     try:
-                        content = urllib.urlopen(url).read()
-                        c_soup = BeautifulSoup(content)
-                        con_str = self.para_parser(c_soup)
+                        con_str = self.para_parser(url)
                         if con_str:
                             break
                     except:

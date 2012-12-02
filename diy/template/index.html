@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <title>my novel site!</title>
+		<link rel="stylesheet" href="/static/css/reset.css"></link>
+    </head>
+    
+    <body>
+        <div id="header">
+        </div>
+        <div id="main">
+            <ul>
+            {% for book in dic %}
+                <li><a href="{{ book['url'] }}">{{ book['title'] }}</a></li>
+            {% end %}
+            </ul>
+        </div>
+        <style>
+            body{background: #EFEBE0 url(/static/back.jpg) repeat;}
+            #header{height:100px;}
+            #main{width:60%;margin:0 auto;padding-left:20px;}
+
+            #main ul li{margin-top:10px;margin-bottom:10px;}
+        </style>
+            
+    </body>
+</html>

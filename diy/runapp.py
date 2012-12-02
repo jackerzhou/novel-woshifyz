@@ -83,7 +83,13 @@ class DetailHandler(tornado.web.RequestHandler):
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        self.redirect('/wdqk')
+        res = []
+        for key,book in books.items():
+            tmp = {}
+            tmp['title'] = book[2]
+            tmp['url'] = '/%s' % (key,)
+            res.append(tmp)
+        self.render('index.html',dic=res)
 
 if __name__ == '__main__':
     try:

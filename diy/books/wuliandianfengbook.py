@@ -3,16 +3,16 @@ import re
 from bs4 import BeautifulSoup
 import urllib
 
-class WdqkBook(BaseBook):
+class WuliandianfengBook(BaseBook):
     def __init__(self):
-        self._name='wdqk'
-        self._dir_name = 'wudongqiankun'
-        self._main_page= 'http://www.saesky.net/wudongqiankun/'
-        self._table_name = 'wdqk'
-        self._from_encoding = None
+        self._name='wuliandianfeng'
+        self._dir_name = 'wuliandianfeng'
+        self._main_page= 'http://www.saesky.net/xs/2/2551/'
+        self._table_name = 'wuliandianfeng'
+        self._from_encoding = 'GB18030'
 
     def gen_url_num(self,url):
-        return re.match(r'http://www.saesky.net/wudongqiankun/(\S+?)\.html',url).group(1)
+        return re.match(r'(\S+?)\.html',url).group(1)
 
     def menu_parser(self):
         main_content = urllib.urlopen(self._main_page).read()
@@ -20,7 +20,7 @@ class WdqkBook(BaseBook):
             con_soup = BeautifulSoup(main_content,from_encoding=self._from_encoding)
         else:
             con_soup = BeautifulSoup(main_content)
-        mulu = con_soup.find('div',{'class':'box'})
+        mulu = con_soup.find('div',{'class':'box1'})
         para = mulu.findAll('li')
         return para
     
@@ -30,7 +30,7 @@ class WdqkBook(BaseBook):
             c_soup = BeautifulSoup(content,from_encoding=self._from_encoding)
         else:
             c_soup = BeautifulSoup(content)
-        content_body = c_soup.find('div',{'class':'content-body'})
+        content_body = c_soup.find('div',{'id':'contentTxt'})
         script_garbage = content_body.findAll('script')
         [t.extract() for t in script_garbage]
         div_garbage = content_body.findAll('div',{'style':re.compile('.+')})
@@ -44,4 +44,6 @@ class WdqkBook(BaseBook):
         return tmp
 
         
+    def make_para_url(self,url):
+        return '%s%s' % (self._main_page,url,)
     
