@@ -10,7 +10,7 @@ def gen_content_path(mode,name):
     if mode == 'dev':
         return os.path.join(os.path.dirname(__file__),'../content',name)
     else:    
-        return os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'..',name)
+        return os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'../content',name)
 
 def book_relative_import(module_str):
     import_module = __import__(module_str[0],fromlist=[module_str[1]])
