@@ -6,9 +6,11 @@ import urllib
 
 class BaseBook(object):
 
+    #parser list
     def menu_parser(self):
         raise NotImplementedError    
 
+    #parser content of the given url
     def para_parser(self,url):
         raise NotImplementedError
 
@@ -17,10 +19,12 @@ class BaseBook(object):
             {'source_url':xxx,'title':xxx}
         '''
         raise NotImplementedError
-
+    
+    #get the identify num from url
     def gen_url_num(self,url):
         raise NotImplementedError
 
+    #generate link url to openable link
     def make_para_url(self,url):
         return url
 
