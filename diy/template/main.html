@@ -8,12 +8,12 @@
     </head>
     <body>
         <div id="header">
-            武动乾坤 
+            {{ dic['title'] }}
         </div>
         <div id="main">
         	<div id="content">
         		<ul>
-        			{% for p in dic %}
+        			{% for p in dic['all'] %}
         			<li><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>
         			{% end %}
         			<div class="clear"></div>

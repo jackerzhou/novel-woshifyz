@@ -10,14 +10,17 @@ def main(mode):
     dbconf = gen_dbconf(mode)
     conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
     for key in books:
-        book_module = book_relative_import(books[key])
-        book = book_module()
-        path = gen_content_path(mode,book.dir_name)
-        if not os.path.exists(path):
-            os.mkdir(path)
-        os.chdir(path)
+        if mode == 'pro' and books[key][3] == True:
+            pass
+        else:
+            book_module = book_relative_import(books[key])
+            book = book_module()
+            path = gen_content_path(mode,book.dir_name)
+            if not os.path.exists(path):
+                os.mkdir(path)
+            os.chdir(path)
 
-        book.process(conn)
+            book.process(conn)
 
     conn.close()
 
