@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 books = {
-        'wdqk':['books.wdqkbook','WdqkBook','舞动乾坤',False],
+        'wdqk':['books.wdqkbook','WdqkBook','武动乾坤',False],
         #'wuliandianfeng':['books.wuliandianfengbook','WuliandianfengBook','wuliandianfeng']
         'doupocangqiong':['books.doupocangqiongbook','DoupocangqiongBook','斗破苍穹',True]
         }
