@@ -16,8 +16,6 @@ class DoupocangqiongBook(BaseBook):
         return re.match(r'(\S+?)\.html',url).group(1)
 
     def menu_parser(self):
-        import pdb
-        pdb.set_trace()
         main_content = urllib.urlopen(self._main_page).read()
         if self._from_encoding:
             con_soup = BeautifulSoup(main_content,from_encoding=self._from_encoding)
