@@ -9,6 +9,7 @@ html,body{background:#eee;min-height:100%}
 
 #main .para:hover{border-radius: 4px 4px 4px 4px;background-color:#ddd;}
 
+#back{width:120px;height:120px;position:absolute;left:0px;top:0px;}
 @media only screen and (max-width: 1024px){
     #main .para{width:28%;font-size:16px;}
 }
