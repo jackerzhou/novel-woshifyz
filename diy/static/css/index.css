@@ -1,5 +1,5 @@
 html,body{background-color:#eee;min-height:100%} 
-#header{height:50px;text-align:center;}
+#header{height:20px;text-align:center;}
 #main{width:60%;margin:0 auto;background: url(/static/dog.png) no-repeat left top;}
 
 #main article{width:80%;padding-left:130px;padding-bottom: 20px; text-indent: 2em;line-height: 1.5em;text-shadow:2px 2px 2px #aaa;}
