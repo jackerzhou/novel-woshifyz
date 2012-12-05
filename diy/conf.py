@@ -2,7 +2,8 @@
 books = {
         'wdqk':['books.wdqkbook','WdqkBook','武动乾坤',False],
         #'wuliandianfeng':['books.wuliandianfengbook','WuliandianfengBook','wuliandianfeng']
-        'doupocangqiong':['books.doupocangqiongbook','DoupocangqiongBook','斗破苍穹',True]
+        'doupocangqiong':['books.doupocangqiongbook','DoupocangqiongBook','斗破苍穹',True],
+        'luxiaofeng':['books.luxiaofengbook','LuxiaofengBook','陆小凤传奇',True]
         }
 
 def gen_dbconf(mode):
