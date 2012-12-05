@@ -9,7 +9,7 @@ html,body{background:#eee;min-height:100%}
 a:link{color:black;}
 a:visited{color: black;}
 
-@media screen and (max-width:480px){
+@media screen and (max-width:600px){
     #menu{position:relative;width:100%;}
     #content{width:98%;}
 }
