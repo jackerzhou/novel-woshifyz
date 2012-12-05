@@ -99,7 +99,7 @@ if __name__ == '__main__':
     except:
         mode = 'pro'
     app = Application(mode)
-    if mode == 'dev':
+    if mode == 'dev' or mode == 'office':
         address = 'localhost'
     else:
         address = os.environ['OPENSHIFT_INTERNAL_IP']

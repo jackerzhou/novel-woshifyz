@@ -4,3 +4,4 @@ ol,ul{list-style:none;}
 blockquote,q{quotes:none;}
 blockquote:before,blockquote:after,q:before,q:after {content:'';content:none;}
 :link, :visited {text-decoration:none;}
+.clear{clear: both;}

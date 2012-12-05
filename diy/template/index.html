@@ -4,6 +4,7 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>my novel site!</title>
 		<link rel="stylesheet" href="/static/css/reset.css"></link>
+        <link rel="stylesheet" href="/static/css/index.css"></link>
     </head>
     
     <body>
@@ -11,21 +12,18 @@
             ALL!
         </div>
         <div id="main">
+            <article>这是一个小说收集网站，目的是希望在看小说的时候可以不受广告的打扰，所有内容都是在互联网上所爬取，如有任何版权问题，望与我取得联系，代码托管于https://github.com/woshifyz/novel-woshifyz
+            在可扩展性上已做处理，欢迎有兴趣者提交爬虫代码。<br>
+            由于这只是个人项目，所以我不打算将自己沉入IE的泥沼，所以现在我只保证支持最新chrome，望理解。
+            </article>        
             <ul>
             {% for book in dic %}
-                <li><a href="{{ book['url'] }}">{{ book['title'] }}</a></li>
+                <li class="book"><a href="{{ book['url'] }}">{{ book['title'] }}</a></li>
             {% end %}
+                <div class="clear"></div>
             </ul>
         </div>
-        <style>
-            body{background: #EFEBE0 url(/static/back.jpg) repeat;}
-            #header{height:100px;text-align:center;}
-            #main{width:60%;margin:0 auto;padding-left:50px;}
 
-            #main ul li{margin-top:10px;margin-bottom:10px;height:32px;padding-left:36px;line-height:32px;vertical-align:middle;font-size:24px;text-decoration:normal;}
-            #main ul li{background:url(/static/book.png) left center no-repeat;}
-            
-        </style>
         <script type="text/javascript">
 
               var _gaq = _gaq || [];

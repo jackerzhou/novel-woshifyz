@@ -1,0 +1,10 @@
+html,body{background-color:#eee;min-height:100%} 
+#header{height:50px;text-align:center;}
+#main{width:60%;margin:0 auto;background: url(/static/dog.png) no-repeat left top;}
+
+#main article{width:80%;padding-left:130px;padding-bottom: 20px; text-indent: 2em;line-height: 1.5em;text-shadow:2px 2px 2px #aaa;}
+
+#main .book{box-shadow:5px 5px 10px #bbbbbb;-webkit-transition:all 0.5s ease; transition:all 0.5s ease;-moz-transition:all 0.5s ease;float:left;width: 27%;height: 42px;border: 1px dashed #aaaaaa;background:url(/static/icon_flower.png) no-repeat 20% center; text-align: center;padding-top: 5px;padding-bottom: 5px;margin:10px 1%; font-size: 24px;line-height: 42px; vertical-align: middle;}
+
+#main .book:hover{border-radius: 0px 8px 8px 0px; border: 1px dashed #333333; -webkit-transform:scale(1.1,1.1);transform:scale(1.1,1.1);-moz-transform:scale(1.1,1.1);}
+
