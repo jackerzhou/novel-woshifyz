@@ -5,7 +5,7 @@ html,body{background:#eee;min-height:100%}
 :link{color:black;}
 #footer{width:80%;margin:0 auto;height:80px;text-align:center;line-height:80px;vertical-align:middle;font-size:12px;}
 
-#main .para{box-shadow:0px 1px 2px #ddd;-webkit-transition:all 0.3s ease; transition:all 0.3s ease;-moz-transition:all 0.3s ease;float:left;width: 23%;padding-top: 5px;padding-bottom: 5px;margin:10px 1%; font-size: 14px; vertical-align: middle;text-align:left;}
+#main .para{text-shadow:2px 2px 4px #ddd;box-shadow:0px 1px 2px #ddd;-webkit-transition:all 0.3s ease; transition:all 0.3s ease;-moz-transition:all 0.3s ease;float:left;width: 23%;padding-top: 5px;padding-bottom: 5px;margin:10px 1%; font-size: 14px; vertical-align: middle;text-align:left;}
 
 #main .para:hover{border-radius: 4px 4px 4px 4px;background-color:#ddd;}
 
