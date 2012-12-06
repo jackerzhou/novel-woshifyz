@@ -9,6 +9,7 @@ import tornado.database
 import re
 from utils import filter_link,gen_content_path,book_relative_import
 from conf import books,gen_dbconf
+from dbpool import DBPool
 
 class Application(tornado.web.Application):
     def __init__(self,mode):
