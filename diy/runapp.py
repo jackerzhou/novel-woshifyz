@@ -25,9 +25,9 @@ class Application(tornado.web.Application):
         )
         super(Application,self).__init__(handlers,**settings)
         self.mode = mode
-        
         dbconf = gen_dbconf(self.mode)
-        self.conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
+        self.pool = DBPool(host=dbconf['host'],database=dbconf['db'],user=dbconf['user'],password=dbconf['passwd'],min_conn=4,max_conn=7)
+        
         self.books = {}
         self.book_names = {}
         for key in books:
@@ -37,27 +37,30 @@ class Application(tornado.web.Application):
             self.book_names[key] = books[key][2]
 
     def __del__(self):
-        self.conn.close()
+        self.pool.close()
 
 class MainHandler(tornado.web.RequestHandler):
     @property
-    def conn(self):
-        return self.application.conn
+    def pool(self):
+        return self.application.pool
 
     def get(self,id):
         book = self.application.books[str(id).strip()]
+        self.conn = self.pool.connect()
         all_para = self.conn.query("select num,title from %s" % (book.table_name,))
         for para in all_para:
             para['num'] = book.translate_link(para['num'])
         self.render('main.html',dic={'all':all_para,'title':self.application.book_names[str(id).strip()]})
+        
 
 class DetailHandler(tornado.web.RequestHandler):
     @property
-    def conn(self):
-        return self.application.conn
+    def pool(self):
+        return self.application.pool
 
     def get(self,name,id):
         book = self.application.books[name]
+        self.conn = self.pool.connect()
         filename = '%s_%s.txt' % (name,id,)
         filename = os.path.join(gen_content_path(self.application.mode,book.dir_name),filename)
         try:

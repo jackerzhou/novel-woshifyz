@@ -5,10 +5,13 @@ import re
 import os,os.path
 from utils import gen_content_path,book_relative_import
 from conf import books,gen_dbconf
+from dbpool import DBPool
             
 def main(mode,novel):
     dbconf = gen_dbconf(mode)
-    conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
+    #conn = tornado.database.Connection(dbconf['host'],dbconf['db'],user=dbconf['user'],password=dbconf['passwd'])
+    pool = DBPool(host=dbconf['host'],database=dbconf['db'],user=dbconf['user'],password=dbconf['passwd'],min_conn=2,max_conn=3)
+    conn = pool.connect()
     if not novel:
         for key in books:
             if mode == 'pro' and books[key][3] == True:
@@ -36,7 +39,7 @@ def main(mode,novel):
 
             book.process(conn)
 
-    conn.close()
+    pool.close()
 
 if __name__ == '__main__':
     import sys
