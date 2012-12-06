@@ -1,14 +1,9 @@
-<!doctype html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <title>my novel site!</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-		<link rel="stylesheet" href="/static/css/reset.css"></link>
-        <link media="screen" rel="stylesheet" href="/static/css/index.css"></link>
-    </head>
+{% extends base.html %}
+    {% block css %}
+    <link media="screen" rel="stylesheet" href="/static/css/index.css"></link>
+    {% end %}
     
-    <body>
+    {% block body %}
         <div id="header">
         </div>
         <div id="main">
@@ -26,6 +21,10 @@
             </ul>
         </div>
 
+    {% end %}
+
+    {% block script %}
+
         <script type="text/javascript">
 
               var _gaq = _gaq || [];
@@ -39,6 +38,6 @@
               })();
 
         </script>
-            
-    </body>
-</html>
+
+    {% end %}
+        
