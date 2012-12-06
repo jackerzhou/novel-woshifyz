@@ -82,7 +82,7 @@ class DetailHandler(tornado.web.RequestHandler):
                 pre_para = together[cur_num-1]['num']
             if cur_num+1<len(together):
                 next_para = together[cur_num+1]['num']
-            self.render('detail.html',dic={'content':filter_link(content),'cur':cur,'together':together,'pre':pre_para,'next':next_para})
+            self.render('detail.html',dic={'content':filter_link(content),'back':'/'+name,'cur':cur,'together':together,'pre':pre_para,'next':next_para})
         except Exception,e:
             pass
 

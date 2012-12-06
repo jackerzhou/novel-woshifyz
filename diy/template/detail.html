@@ -7,20 +7,6 @@
 		<link rel="stylesheet" href="/static/css/detail.css"></link>
     </head>
     <body>
-        <div id="menu">
-            <ul>
-                {% for p in dic['together'] %}
-                    {% if p['id'] == dic['cur']['id'] %}
-                    <li class="cur"><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>    
-                    {% else %}
-                    <li><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>    
-                    {% end %}
-                {% end %}
-            </ul>
-        </div>
-        <a id="back" href="/wdqk" style="position:fixed;left:0px;top:40px;">
-            返回目录
-        </a>
         <div class="hidden">
             <div id="pre" value="{{ dic['pre'] }}"></div>
             <div id="next" value="{{ dic['next'] }}"></div>
@@ -31,8 +17,21 @@
         <div id="content"> 
             {{ dic['content'] }}
         </div>
+        <div id="menu">
+            <ul>
+                <hr/>
+                <li><a href="{{ dic['back'] }}">返回目录</a></li>
+                <hr/>
+                {% for p in dic['together'] %}
+                    {% if p['id'] == dic['cur']['id'] %}
+                    <li class="cur"><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>    
+                    {% else %}
+                    <li><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>    
+                    {% end %}
+                {% end %}
+            </ul>
+        </div>
         <div id="footer">
-            copyright@fyz.com
         </div>
         <script>
             $(document).ready(function(){

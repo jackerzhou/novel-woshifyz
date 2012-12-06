@@ -9,14 +9,14 @@
     </head>
     <body>
         <div id="header">
-            <a href='/'><img src="/static/dog.png"></a>
+            <div><a id="back" href="/"></a></div>
             {{ dic['title'] }}
         </div>
         <div id="main">
         	<div id="content">
         		<ul>
         			{% for p in dic['all'] %}
-        			<li><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>
+        			<li class="para"><a href="{{ p['num'] }}">{{ p['title'] }}</a></li>
         			{% end %}
         			<div class="clear"></div>
         		</ul>
