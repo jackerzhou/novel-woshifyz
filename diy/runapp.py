@@ -47,8 +47,9 @@ class MainHandler(tornado.web.RequestHandler):
 
     def get(self,id):
         book = self.application.books[str(id).strip()]
-        self.conn = self.pool.connect()
-        all_para = self.conn.query("select num,title from %s" % (book.table_name,))
+        conn = self.pool.connect()
+        all_para = conn.query("select num,title from %s" % (book.table_name,))
+        conn.close()
         for para in all_para:
             para['num'] = book.translate_link(para['num'])
         self.render('main.html',dic={'all':all_para,'title':self.application.book_names[str(id).strip()]})
@@ -61,15 +62,14 @@ class DetailHandler(tornado.web.RequestHandler):
 
     def get(self,name,id):
         book = self.application.books[name]
-        self.conn = self.pool.connect()
         filename = '%s_%s.txt' % (name,id,)
         filename = os.path.join(gen_content_path(self.application.mode,book.dir_name),filename)
         try:
-            fp = open(filename,'r')
-            content = fp.read()
-            cur = self.conn.get("select id,num,title from %s where num='%s' " % (name,id,))
-            together_next = self.conn.query("select id,num,title from %s where id>=%d order by id limit 6" % (name,int(cur['id']),))
-            together = self.conn.query("select id,num,title from %s where id<%d order by id desc limit 3" % (name,int(cur['id']),))
+            conn = self.pool.connect()
+            cur = conn.get("select id,num,title from %s where num='%s' " % (name,id,))
+            together_next = conn.query("select id,num,title from %s where id>=%d order by id limit 6" % (name,int(cur['id']),))
+            together = conn.query("select id,num,title from %s where id<%d order by id desc limit 3" % (name,int(cur['id']),))
+            conn.close()
             together.reverse()
             together.extend(together_next)
             cur_num = 0
@@ -83,6 +83,8 @@ class DetailHandler(tornado.web.RequestHandler):
                 pre_para = together[cur_num-1]['num']
             if cur_num+1<len(together):
                 next_para = together[cur_num+1]['num']
+            fp = open(filename,'r')
+            content = fp.read()
             self.render('detail.html',dic={'content':filter_link(content),'back':'/'+name,'cur':cur,'together':together,'pre':pre_para,'next':next_para})
         except Exception,e:
             pass

@@ -39,6 +39,7 @@ def main(mode,novel):
 
             book.process(conn)
 
+    conn.close()
     pool.close()
 
 if __name__ == '__main__':
