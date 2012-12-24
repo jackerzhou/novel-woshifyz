@@ -9,6 +9,7 @@ import tornado.database
 import re
 from utils import filter_link,gen_content_path,book_relative_import
 from conf import books,gen_dbconf
+import conf
 from dbpool import DBPool
 
 class Application(tornado.web.Application):
@@ -90,6 +91,11 @@ class DetailHandler(tornado.web.RequestHandler):
             pass
 
 class IndexHandler(tornado.web.RequestHandler):
+
+    @property
+    def pool(self):
+        return self.application.pool
+
     def get(self):
         res = []
         for key,book in books.items():
@@ -97,7 +103,15 @@ class IndexHandler(tornado.web.RequestHandler):
             tmp['title'] = book[2]
             tmp['url'] = '/%s' % (key,)
             res.append(tmp)
-        self.render('index.html',dic=res)
+
+        conn = self.pool.connect()
+        news = conn.query("select belong,title,num from %s order by id desc limit %s" % (conf.NEWS_TABLE_NAME,conf.NEWS_COUNT,))
+        for new in news:
+            book = self.application.books[new['belong']]
+            new['href'] = book.translate_link(new['num'])        
+            new['belong'] = self.application.book_names[new['belong']]
+        conn.close()
+        self.render('index.html',dic=res,news=news)
 
 if __name__ == '__main__':
     try:

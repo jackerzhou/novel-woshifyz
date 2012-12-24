@@ -15,3 +15,5 @@ def gen_dbconf(mode):
         return {'host':'127.6.123.1','db':'novel','user':'admin','passwd':'b4E3e3T8KRj8'}
 
 
+NEWS_COUNT = 20
+NEWS_TABLE_NAME = 'news'

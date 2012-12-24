@@ -9,6 +9,9 @@ p{margin-top:8px;}
 #main .book{box-shadow:5px 5px 10px #bbbbbb;-webkit-transition:all 0.5s ease; transition:all 0.5s ease;-moz-transition:all 0.5s ease;float:left;width: 27%;height: 42px;border: 1px dashed #aaaaaa;background:url(/static/icon_flower.png) no-repeat 5% center; text-align: center;padding-top: 5px;padding-bottom: 5px;margin:10px 1%; font-size: 20px;line-height: 42px; vertical-align: middle;}
 
 #main .book:hover{border-radius: 0px 8px 8px 0px; border: 1px dashed #333333; -webkit-transform:scale(1.1,1.1);transform:scale(1.1,1.1);-moz-transform:scale(1.1,1.1);}
+
+#main .news{width:60%;margin:0 auto;font-size:1.2em;}
+#main .news .new{margin-top:5px;}
 @media only screen and (max-width: 1024px){
     #main .book{width:45%;font-size:18px;}
 }

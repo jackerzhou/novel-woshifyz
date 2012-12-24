@@ -3,6 +3,7 @@ from Queue import Queue
 import os,os.path
 from bs4 import BeautifulSoup
 import urllib
+import conf
 
 class BaseBook(object):
 
@@ -37,6 +38,14 @@ class BaseBook(object):
                 "key num_index(num))engine=innodb,default charset=utf8; " % (self._table_name,)
         self.conn.execute(query)
 
+    def ensure_news_table_exist(self):
+        query = "create table if not exists %s( " \
+                "id int primary key auto_increment, " \
+                "belong varchar(32) not null default '', " \
+                "title varchar(128) not null default '', " \
+                "num varchar(32) not null default '')engine=innodb,default charset=utf8;" % (conf.NEWS_TABLE_NAME,)
+        self.conn.execute(query)
+
     def gen_last(self):
         #every book have only one structure
         last_para = self.conn.get("select num,title,source_url from %s order by id desc limit 1" % (self._table_name,))
@@ -62,6 +71,7 @@ class BaseBook(object):
     def process(self,conn):
         self.conn = conn
         self.ensure_table_exist()
+        self.ensure_news_table_exist()
         self.at,self.last_url = self.gen_last()
         
         self.para = self.menu_parser()
@@ -90,6 +100,7 @@ class BaseBook(object):
                 fp.write(con_str)
                 fp.close()
                 self.conn.execute("insert into %s (num,title,source_url) values('%s','%s','%s')" % (self._table_name,num.encode('utf-8'),tmp['title'].encode('utf-8'),tmp['source_url'].encode('utf-8'),))
+                self.conn.execute("insert into %s (belong,title,num) values('%s','%s','%s')" % (conf.NEWS_TABLE_NAME,self._name,tmp['title'].encode('utf-8'),num.encode('utf-8'),))
             except Exception,e:
                 print url
 
