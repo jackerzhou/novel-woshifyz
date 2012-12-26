@@ -11,6 +11,7 @@ from utils import filter_link,gen_content_path,book_relative_import
 from conf import books,gen_dbconf
 import conf
 from dbpool import DBPool
+from cache import *
 
 class Application(tornado.web.Application):
     def __init__(self,mode):
@@ -37,6 +38,7 @@ class Application(tornado.web.Application):
             book = book_module()
             self.books[key] = book
             self.book_names[key] = books[key][2]
+        self.bookcontent_cache = KVCache(cap=200)
 
     def __del__(self):
         self.pool.close()
@@ -84,8 +86,12 @@ class DetailHandler(tornado.web.RequestHandler):
                 pre_para = together[cur_num-1]['num']
             if cur_num+1<len(together):
                 next_para = together[cur_num+1]['num']
-            fp = open(filename,'r')
-            content = fp.read()
+            
+            content = self.application.bookcontent_cache.get(filename,None) 
+            if content == None:
+                fp = open(filename,'r')
+                content = fp.read()
+                self.application.bookcontent_cache[filename] = content
             self.render('detail.html',dic={'content':filter_link(content),'back':'/'+name,'cur':cur,'together':together,'pre':pre_para,'next':next_para})
         except Exception,e:
             pass
