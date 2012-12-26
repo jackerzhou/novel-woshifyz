@@ -87,11 +87,11 @@ class DetailHandler(tornado.web.RequestHandler):
             if cur_num+1<len(together):
                 next_para = together[cur_num+1]['num']
             
-            content = self.application.bookcontent_cache.get(filename,None) 
+            content = self.application.bookcontent_cache.get(filename) 
             if content == None:
                 fp = open(filename,'r')
                 content = fp.read()
-                self.application.bookcontent_cache[filename] = content
+                self.application.bookcontent_cache.set(filename,content)
             self.render('detail.html',dic={'content':filter_link(content),'back':'/'+name,'cur':cur,'together':together,'pre':pre_para,'next':next_para})
         except Exception,e:
             pass
