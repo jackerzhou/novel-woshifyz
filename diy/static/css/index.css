@@ -14,6 +14,7 @@ p{margin-top:8px;}
 #main .news .new{margin-top:5px;}
 @media only screen and (max-width: 1024px){
     #main .book{width:45%;font-size:18px;}
+    #main .news{width:80%;font-size:1.1em;}
 }
 @media screen and (max-width:480px){
     #main .book{width:90%;}
